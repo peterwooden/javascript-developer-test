@@ -7,7 +7,7 @@ const { httpGet } = require('./mock-http-interface');
  */
 const getArnieQuotes = async (urls) => {
 
-  // For each URL, create a promise to process it
+  // For each URL, create a promise to process it concurrently
   const promises = urls.map(async (url) => {
 
     // Execute GET request, and map errors into results
@@ -24,8 +24,8 @@ const getArnieQuotes = async (urls) => {
     }
   });
 
-  // Process promises concurrently and collect the results of each into an array
-  return await Promise.all(promises);
+  // Return a promise resolving to an array of all the results
+  return Promise.all(promises);
 };
 
 module.exports = {
